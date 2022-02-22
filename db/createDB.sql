@@ -3,17 +3,17 @@ CREATE TABLE TARIFS(
                        name VARCHAR,
                        price VARCHAR
 );
-CREATE TABLE LISTOFOPTIONS(
+CREATE TABLE OPTIONS(
                               id SERIAL PRIMARY KEY,
                               name VARCHAR,
                               payment VARCHAR,
                               connection_price VARCHAR
 );
-CREATE TABLE TARIFS_LISTOFOPTIONS(
+CREATE TABLE TARIFS_OPTIONS(
                                      id_tarif INT,
                                      id_option INT,
                                      FOREIGN KEY (id_tarif) REFERENCES TARIFS(id),
-                                     FOREIGN KEY (id_option) REFERENCES LISTOFOPTIONS(id),
+                                     FOREIGN KEY (id_option) REFERENCES OPTIONS(id),
                                      CONSTRAINT unique_pair UNIQUE(id_tarif,id_option)
 );
 CREATE TABLE CONTRACTS(
@@ -21,11 +21,11 @@ CREATE TABLE CONTRACTS(
                           id_tarif INT,
                           FOREIGN KEY (id_tarif) REFERENCES TARIFS(id)
 );
-CREATE TABLE CONTRACTS_LISTOFOPTIONS(
+CREATE TABLE CONTRACTS_OPTIONS(
                                         contract_number VARCHAR,
                                         id_option INT,
                                         FOREIGN KEY (contract_number) REFERENCES CONTRACTS(contract_number),
-                                        FOREIGN KEY (id_option) REFERENCES LISTOFOPTIONS(id),
+                                        FOREIGN KEY (id_option) REFERENCES OPTIONS(id),
                                         CONSTRAINT unique_pair_1 UNIQUE(contract_number,id_option)
 );
 CREATE TABLE CLIENTS(
@@ -46,7 +46,7 @@ ALTER TABLE CONTRACTS
     ADD CONSTRAINT contracts_clients_fk FOREIGN KEY(id_client) REFERENCES CLIENTS(id);
 
 CREATE TABLE ROLES(
-                      id INT PRIMARY KEY,
+                      id SERIAL PRIMARY KEY,
                       name VARCHAR
 );
 
