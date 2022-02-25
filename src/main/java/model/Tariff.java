@@ -1,30 +1,30 @@
-package models;
+package model;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "TARIFS")
-public class Tarif {
+@Table(name = "TARIFFS")
+public class Tariff {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "name")
     private String name;
-    @Column(name = "price")
-    private String price;
-    @ManyToMany(mappedBy = "tarifs", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Column(name = "payment")
+    private String payment;
+    @ManyToMany(mappedBy = "tariffs", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Option> options;
-    @OneToMany(mappedBy = "tarif", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "tariff", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Contract> contracts;
 
-    public Tarif(){}
+    public Tariff() {}
 
-    public Tarif(String name, String price) {
+    public Tariff(String name, String payment) {
         this.name = name;
-        this.price = price;
+        this.payment = payment;
         options = new HashSet<>();
         contracts = new HashSet<>();
     }
@@ -35,7 +35,7 @@ public class Tarif {
     }
 
     public void addContract(Contract contract){
-        contract.setTarif(this);
+        contract.setTariff(this);
         contracts.add(contract);
     }
     public void removeContract(Contract contract){ contracts.remove(contract); }
@@ -47,8 +47,8 @@ public class Tarif {
     public void setName(String name) {
         this.name = name;
     }
-    public void setPrice(String price) {
-        this.price = price;
+    public void setPayment(String payment) {
+        this.payment = payment;
     }
 
     public Set<Contract> getContracts() { return contracts; }
@@ -61,8 +61,8 @@ public class Tarif {
     public String getName() {
         return name;
     }
-    public String getPrice() {
-        return price;
+    public String getPayment() {
+        return payment;
     }
 
 }

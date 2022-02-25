@@ -1,6 +1,7 @@
-package models;
+package model;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,10 +19,10 @@ public class Option {
     @Column(name = "connection_price")
     private String connection_price;
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "TARIFS_OPTIONS",
+    @JoinTable(name = "TARIFFS_OPTIONS",
             joinColumns = @JoinColumn(name = "id_option"),
-            inverseJoinColumns = @JoinColumn(name = "id_tarif"))
-    private Set<Tarif> tarifs;
+            inverseJoinColumns = @JoinColumn(name = "id_tariff"))
+    private Set<Tariff> tariffs;
     @ManyToMany(mappedBy = "options", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Contract> contracts;
 
@@ -31,21 +32,21 @@ public class Option {
         this.name = name;
         this.payment = payment;
         this.connection_price = connection_price;
-        tarifs = new HashSet<>();
+        tariffs = new HashSet<>();
         contracts = new HashSet<>();
     }
 
-    public void addTarif(Tarif tarif){ tarifs.add(tarif); }
-    public void removeTarif(Tarif tarif){
-        tarifs.remove(tarif);
+    public void addTariff(Tariff tariff){ tariffs.add(tariff); }
+    public void removeTariff(Tariff tariff){
+        tariffs.remove(tariff);
     }
 
     public void addContract(Contract contract){ contracts.add(contract); }
     public void removeContract(Contract contract){ contracts.remove(contract); }
 
     public void setContracts(Set<Contract> contracts) { this.contracts = contracts; }
-    public void setTarifs(Set<Tarif> tarifs) {
-        this.tarifs = tarifs;
+    public void setTariffs(Set<Tariff> tariffs) {
+        this.tariffs = tariffs;
     }
     public void setName(String name) {
         this.name = name;
@@ -58,8 +59,8 @@ public class Option {
     }
 
     public Set<Contract> getContracts() { return contracts; }
-    public Set<Tarif> getTarifs() {
-        return tarifs;
+    public Set<Tariff> getTariffs() {
+        return tariffs;
     }
     public int getId() {
         return id;

@@ -1,7 +1,7 @@
-CREATE TABLE TARIFS(
+CREATE TABLE TARIFFS(
                        id SERIAL PRIMARY KEY,
                        name VARCHAR,
-                       price VARCHAR
+                       payment VARCHAR
 );
 CREATE TABLE OPTIONS(
                               id SERIAL PRIMARY KEY,
@@ -9,17 +9,17 @@ CREATE TABLE OPTIONS(
                               payment VARCHAR,
                               connection_price VARCHAR
 );
-CREATE TABLE TARIFS_OPTIONS(
-                                     id_tarif INT,
+CREATE TABLE TARIFFS_OPTIONS(
+                                     id_tariff INT,
                                      id_option INT,
-                                     FOREIGN KEY (id_tarif) REFERENCES TARIFS(id),
+                                     FOREIGN KEY (id_tariff) REFERENCES TARIFFS(id),
                                      FOREIGN KEY (id_option) REFERENCES OPTIONS(id),
-                                     CONSTRAINT unique_pair UNIQUE(id_tarif,id_option)
+                                     CONSTRAINT unique_pair UNIQUE(id_tariff,id_option)
 );
 CREATE TABLE CONTRACTS(
                           contract_number VARCHAR PRIMARY KEY,
-                          id_tarif INT,
-                          FOREIGN KEY (id_tarif) REFERENCES TARIFS(id)
+                          id_tariff INT,
+                          FOREIGN KEY (id_tariff) REFERENCES TARIFFS(id)
 );
 CREATE TABLE CONTRACTS_OPTIONS(
                                         contract_number VARCHAR,

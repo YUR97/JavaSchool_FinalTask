@@ -1,6 +1,6 @@
-package models;
+package model;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import org.hibernate.annotations.NaturalId;
 import java.sql.Date;
 import java.util.HashSet;
