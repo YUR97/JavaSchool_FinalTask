@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Client by id</title>
+    <style>
+        body { background-color: blue; }
+        td,th {
+            border:2px solid;
+            padding: 5px;
+            background-color: yellow;
+        }
+        hr {color: yellow}
+        button { padding: 3px; }
+    </style>
+</head>
+<body>
+    <div th:each="client : ${clients}">
+        <table>
+            <tr>
+                <td th:text= "${client.getName()} + ' ' + ${client.getSurname()}"></td>
+            </tr>
+            <tr>
+                <td><a th:href="@{/{id}(id=${client.getId()})}">See more</a></td>
+            </tr>
+        </table>
+    </div>
+    <hr>
+    <button onclick="location.href='/new'" >Create</button>
+</body>
+</html>

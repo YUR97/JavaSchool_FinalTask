@@ -36,6 +36,7 @@ public class Option {
         contracts = new HashSet<>();
     }
 
+
     public void addTariff(Tariff tariff){ tariffs.add(tariff); }
     public void removeTariff(Tariff tariff){
         tariffs.remove(tariff);

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit</title>
+    <style>
+        body {
+            background-color: blue;
+        }
+
+        label {
+            border: 2px solid;
+            padding: 5px;
+            margin-top: 0px;
+
+            background-color: yellow;
+        }
+
+        input {
+            margin: 5px;
+            padding: 3px;
+        }
+
+        form {
+            margin-top: 20px;
+            margin-b: 20px;
+        }
+
+        hr {
+            color: yellow;
+            border-width: 3px;
+        }
+
+        button {
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<form th:method="PATCH" th:action="@{/{id}/edit(id=${client.getId()})}" th:object="${client}">
+    <table>
+        <tr>
+            <td><label for="name">Enter name: </label></td>
+            <td><input type="text" th:field="*{name}" id="name"/></td>
+        </tr>
+
+        <tr>
+            <td><label for="surname">Enter surname: </label></td>
+            <td><input type="text" th:field="*{surname}" id="surname"></td>
+        </tr>
+
+    </table>
+    <input type="submit" value="Update!"/>
+</form>
+<hr>
+<button onclick="location.href='/clients'">Back</button>
+</body>
+</html>
