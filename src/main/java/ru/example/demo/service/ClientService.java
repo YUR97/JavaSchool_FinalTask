@@ -22,6 +22,15 @@ public class ClientService {
     public Client getById(int id) {
         Client client = clientRepository.findClientById(id);
         client.getContracts().size();
+        client.getRole().toString();
+        return client;
+    }
+
+    @Transactional
+    public Client getByEmail(String email){
+        Client client = clientRepository.findClientByEmail(email);
+        client.getContracts().size();
+        client.getRole().getName();
         return client;
     }
 

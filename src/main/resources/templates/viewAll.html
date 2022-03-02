@@ -21,11 +21,12 @@
                 <td th:text= "${client.getName()} + ' ' + ${client.getSurname()}"></td>
             </tr>
             <tr>
-                <td><a th:href="@{/{id}(id=${client.getId()})}">See more</a></td>
+                <td><a th:href="@{/admin/{id}(id=${client.getId()})}">See more</a></td>
             </tr>
         </table>
     </div>
     <hr>
-    <button onclick="location.href='/new'" >Create</button>
+    <button onclick="location.href='/admin/new'" >Create</button>
+    <button onclick="location.href='/home'" >go Home</button>
 </body>
 </html>

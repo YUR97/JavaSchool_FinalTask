@@ -28,6 +28,7 @@
     <table>
         <tr>
             <td th:text="${client.getName()} + ' ' + ${client.getSurname()}"></td>
+            <td th:text="${client.getRole().getName()}"></td>
         </tr>
         <tr>
             <td th:text="${client.getAddress()}"></td>
@@ -43,10 +44,7 @@
             </div>
         </tr>
     </table>
-    <button th:onclick="'location.href= \'' + @{/{id}/edit(id=${client.getId()})} + '\''">Edit</button>
-    <button th:onclick="'location.href= \'' + @{/{id}/delete(id=${client.getId()})} + '\''">Delete</button>
 </div>
-<hr>
-<button onclick="location.href='/clients'">Back</button>
+<button onclick="location.href='/home'" >go Home</button>
 </body>
 </html>
