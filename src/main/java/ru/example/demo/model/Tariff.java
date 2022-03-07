@@ -65,11 +65,4 @@ public class Tariff {
         return payment;
     }
 
-    @Override
-    public String toString() {
-        return "Tariff{" +
-                "name='" + name + '\'' +
-                ", payment='" + payment + '\'' +
-                '}';
-    }
 }

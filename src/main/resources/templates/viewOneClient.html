@@ -3,39 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <style>
-        body {
-            background-color: blue;
-        }
-
-        td, th {
-            border: 2px solid;
-            padding: 5px;
-            background-color: yellow;
-        }
-
-        hr {
-            color: yellow
-        }
-
-        button {
-            padding: 3px;
-        }
-    </style>
 </head>
 <body>
 <div>
     <table>
         <tr>
             <td th:text="${client.getName()} + ' ' + ${client.getSurname()}"></td>
-            <td th:text="${client.getRole().getName()}"></td>
+            <td th:text="${client.getRoleDTO().getName()}"></td>
         </tr>
         <tr>
             <td th:text="${client.getAddress()}"></td>
             <td th:text="${client.getEmail()}"></td>
         </tr>
         <tr>
-            <div th:each= "contract : ${client.getContracts()}">
+            <div th:each= "contract : ${client.getContractsDTO()}">
                 <table>
                     <tr>
                         <td th:text="'Number: ' + ${contract.getContract_number()} +', status: ' + ${contract.getStatus()}"></td>

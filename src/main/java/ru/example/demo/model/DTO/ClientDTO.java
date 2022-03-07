@@ -1,41 +1,26 @@
-package ru.example.demo.model;
+package ru.example.demo.model.DTO;
 
-import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table(name = "CLIENTS")
-public class Client {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ClientDTO {
     private int id;
-    @Column(name = "name")
     private String name;
-    @Column(name = "surname")
     private String surname;
-    @Column(name = "birthday")
     private Date birthday;
-    @Column(name = "passport")
     private String passport;
-    @Column(name = "address")
     private String address;
-    @Column(name = "email")
     private String email;
-    @Column(name = "password")
     private String password;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_role")
-    private Role role;
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Contract> contracts;
+    private RoleDTO roleDTO;
+    private Set<ContractDTO> contractsDTO;
 
-    public Client() {
+    public ClientDTO() {
+        contractsDTO = new HashSet<>();
     }
 
-    public Client(String name, String surname, Date birthday, String passport, String address, String email, String password) {
+    public ClientDTO(String name, String surname, java.sql.Date birthday, String passport, String address, String email, String password) {
         this.name = name;
         this.surname = surname;
         this.birthday = birthday;
@@ -43,20 +28,15 @@ public class Client {
         this.address = address;
         this.email = email;
         this.password = password;
-        contracts = new HashSet<>();
+        contractsDTO = new HashSet<>();
     }
 
-    public void addContract(Contract contract) {
-        contract.setClient(this);
-        contracts.add(contract);
+    public void addContractDTO(ContractDTO contractDTO) {
+        contractsDTO.add(contractDTO);
     }
 
-    public void removeContract(Contract contract) {
-        contracts.remove(contract);
-    }
-
-    public Set<Contract> getContracts() {
-        return contracts;
+    public void removeContractDTO(ContractDTO contractDTO) {
+        contractsDTO.remove(contractDTO);
     }
 
     public int getId() {
@@ -91,12 +71,16 @@ public class Client {
         return password;
     }
 
-    public Role getRole() {
-        return role;
+    public RoleDTO getRoleDTO() {
+        return roleDTO;
     }
 
-    public void setContracts(Set<Contract> contracts) {
-        this.contracts = contracts;
+    public Set<ContractDTO> getContractsDTO() {
+        return contractsDTO;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setName(String name) {
@@ -127,8 +111,12 @@ public class Client {
         this.password = password;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoleDTO(RoleDTO roleDTO) {
+        this.roleDTO = roleDTO;
     }
 
+    public void setContractsDTO(Set<ContractDTO> contractsDTO) {
+        this.contractsDTO = contractsDTO;
+    }
 }
+

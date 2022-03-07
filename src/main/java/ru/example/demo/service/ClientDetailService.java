@@ -13,7 +13,7 @@ import ru.example.demo.repo.ClientRepository;
 @Service
 public class ClientDetailService implements UserDetailsService {
 
-    private ClientRepository clientRepository;
+    private final ClientRepository clientRepository;
 
     @Autowired
     public ClientDetailService(ClientRepository clientRepository) {
@@ -25,14 +25,13 @@ public class ClientDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         Client client = clientRepository.findClientByEmail(userName);
         if (client == null) {
-            throw new UsernameNotFoundException("Unknown user: "+userName);
+            throw new UsernameNotFoundException("Unknown user: " + userName);
         }
-        UserDetails user = User.builder()
+        return User.builder()
                 .username(client.getEmail())
                 .password(client.getPassword())
                 .roles(client.getRole().getName())
                 .build();
-        return user;
     }
 
 }

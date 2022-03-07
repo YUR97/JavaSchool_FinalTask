@@ -6,4 +6,7 @@ import ru.example.demo.model.Tariff;
 
 @Repository
 public interface TariffRepository extends JpaRepository<Tariff, Integer> {
+
+    Tariff findTariffById(int id);
+
 }

@@ -7,8 +7,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import ru.example.demo.reference.Reference;
 import ru.example.demo.service.ClientDetailService;
 
 @Configuration
@@ -24,23 +25,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailService);
+        auth.userDetailsService(userDetailService)
+                .passwordEncoder(encoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/client/**").hasRole("USER")
+                .antMatchers("/admin/**").hasRole(Reference.ADMIN)
+                .antMatchers("/client/**").hasRole(Reference.USER)
                 .and()
-                .formLogin()
-                .defaultSuccessUrl("/home");
+                .formLogin().loginPage("/login")
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/home")
+                .and().logout().logoutUrl("/logout");
+
     }
 
     @Bean
     public PasswordEncoder encoder() {
-        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder();
     }
 
 }

@@ -1,41 +1,64 @@
 package ru.example.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.example.demo.model.Client;
+import ru.example.demo.model.DTO.ClientDTO;
+import ru.example.demo.model.DTO.converter.ClientConverterDTO;
 import ru.example.demo.repo.ClientRepository;
+import ru.example.demo.repo.RoleRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ClientService {
 
     private ClientRepository clientRepository;
+    private RoleRepository roleRepository;
+    private ClientConverterDTO clientConverterDTO;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public ClientService(ClientRepository clientRepository) {
+    public ClientService(ClientRepository clientRepository, RoleRepository roleRepository, ClientConverterDTO clientConverterDTO, PasswordEncoder passwordEncoder) {
         this.clientRepository = clientRepository;
+        this.roleRepository = roleRepository;
+        this.clientConverterDTO = clientConverterDTO;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
-    public Client getById(int id) {
+    public ClientDTO getById(int id) {
         Client client = clientRepository.findClientById(id);
-        client.getContracts().size();
-        client.getRole().toString();
-        return client;
+        return clientConverterDTO.convert(client);
     }
 
     @Transactional
-    public Client getByEmail(String email){
+    public ClientDTO getByEmail(String email) {
         Client client = clientRepository.findClientByEmail(email);
-        client.getContracts().size();
-        client.getRole().getName();
-        return client;
+        return clientConverterDTO.convert(client);
     }
 
-    public List<Client> getAll() {
-        return clientRepository.findAll();
+    @Transactional
+    public List<ClientDTO> getAll() {
+        List<ClientDTO> clientDTOS = new ArrayList<>();
+        for (Client client : clientRepository.findAll()) {
+            clientDTOS.add(clientConverterDTO.convert(client));
+        }
+        return clientDTOS;
+    }
+
+    @Transactional
+    public void signUp(ClientDTO clientDTO, String role){
+        Client clientToSave = new Client();
+        clientToSave.setEmail(clientDTO.getEmail());
+        clientToSave.setPassword(passwordEncoder.encode(clientDTO.getPassword()));
+        clientToSave.setRole(roleRepository.findRoleByName(role));
+        clientToSave.setName(clientDTO.getName());
+        clientToSave.setSurname(clientDTO.getSurname());
+        clientRepository.save(clientToSave);
     }
 
     public void save(Client client) {

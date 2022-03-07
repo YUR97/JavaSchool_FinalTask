@@ -1,11 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="UTF-8">
-  <title>Home</title>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="css/home.css">
 </head>
 <body>
-<div  th:text="'Hello, USER ' + ${client.getName()} + ' ' + ${client.getSurname()}"></div>
-<a th:href="@{/client/{id}(id=${client.getId()})}">See me</a>
+<header>
+    <form>
+        <input type="submit" value="Профиль"/>
+    </form>
+    <button>Мои контракты</button>
+    <button>Тарифы</button>
+    <button>Корзина</button>
+    <form th:method="POST" th:action="@{/logout}">
+        <input type="submit" value="Выход"/>
+    </form>
+</header>
 </body>
 </html>
